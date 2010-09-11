@@ -1,0 +1,145 @@
+The Idea is to have an API that works like a programming interface
+
+http://somehost/sbb/1.0/%__METHOD_NAME__%
+
+e.g: http://somehost/sbb/1.0/schedules.get?departure_id=1&arrival_id=2
+-> pretty close to: schedules = new Schedules; schedules.get(departure_id=1, arrival_id=2);
+
+Where method params are passed with the URL (GET) or within the POST body.
+This should generate a sense of API as a programmer uses it, not how a website
+is organized.
+
+Methods are "namespaced" into categories, as you will see.
+
+[var] means optional var
+[var, something] means optional var with default something
+{var} means sorted array/dictionary of var
+TYPE:foobar means: variable of type foobar, defined below.
+
+schedules:
+	schedules.get
+		params:
+			departure_id: station id for departure station
+			arrival_id: station id for arrival station
+			[departure_time, NOW if arrival & departure not set]: unix epoch for departure time
+			[arrival_time]: unix epoch for departure time, ignored when departure_time is set
+			[{via_id}]: array of station ids for via stations
+			[means_mask]: bitmask of products, //TODO: Define Me!
+			[extensive, False]: Whether or not to return the fragments in between.
+			
+		returns:
+			{TYPE:schedules} & request_id
+			
+		errors:
+			station not found: (404?)
+			no times found: (404? or no error, just empty?)
+			
+	schedules.getLater
+		params:
+			schedules_request_id: previously used request_id
+			
+		returns:
+			{TYPE:schedules} & request_id
+			
+		errors:
+			request_id not valid anymore: (404?)
+		
+	schedules.getEarlier
+		params:
+			schedules_request_id: previously used request_id
+		
+		returns:
+			{TYPE:schedules} & request_id
+			
+		errors:
+			request_id not valid anymore: (404?)
+	
+	
+stations:
+	stations.getFromString
+		params:
+			station_query: string to search for, like "Züri"
+		
+		returns:
+			{TYPE:station}
+			
+		errors:
+			no matching stations found: (404?)
+		
+	stations.getFromCoordinate
+		params:
+			station_coordinate: TYPE:coordinate
+			[coordinate_type, "WGS"]: The coordinate type to use, either WGS or CH
+			[radius, "3000"]: The radius, in meters.
+			
+		returns:
+			{TYPE:station}
+			
+		errors:
+			no stations found in this area: (404? or empty list?)
+	
+	
+station:
+	station.getInfo
+		params:
+			station_id: station id to identify the station
+		
+		returns:
+			TYPE:station
+			
+		errors:
+			station not found (404)
+	
+line:
+	line.getInfo
+		params:
+			line_id: line id to identify the line
+		
+		returns:
+			TYPE:line
+		
+		errors:
+			line not found (404)
+	
+connection:
+	connection.getInterruption
+		params:
+			connection_id: connection id of the requested interruption info
+		
+		returns:
+			String of interruption, False if no interruption
+			
+		errors:
+			?	
+	
+Types:
+	station:
+		station_id
+		station_name
+		station_coordinate
+		station_size
+		
+	schedules:
+		request_id
+		{TYPE:connection}
+	
+	connection:
+		connection_id
+		departure_station_id
+		arrival_station_id
+		{TYPE:fragment}
+		
+	fragment: #is a part of a track
+		TYPE:station #departure 
+		TYPE:station #arrival
+		departure_time
+		arrival_time
+		departure_platform
+		arrival_platform
+		TYPE:line
+		
+	line:
+		type: string #what sort of transport mean
+		headsign: string #what's on the plate
+		operator: string #what's the operator of this line
+		
