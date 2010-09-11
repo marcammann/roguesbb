@@ -17,6 +17,6 @@ setup(
     license = "Apache License",
     keywords = "sbb api",
     url = "http://partiql.com/lab/sbb",
-    packages=['frontend', 'api', 'tests'],
+    packages=['sbbfrontend', 'sbbapi', 'tests'],
     long_description=read('README'),
 )
