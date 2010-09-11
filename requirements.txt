@@ -3,4 +3,5 @@ Django==1.2.1
 -e hg+http://bitbucket.org/jespern/django-piston@c4b2d21db51a531b069dd7f0d7fc10996c9c70c8#egg=django_piston-tip
 mercurial==1.6.3
 paramiko==1.7.5
+pycrypto==2.3
 wsgiref==0.1.2
