@@ -9,7 +9,7 @@ urlpatterns = patterns('',
     url(r'^searchform$', 'searchform.views.searchform', name="blah"),
     
     (r'^sitemedia/(?P<path>.*)$', 'django.views.static.serve',
-            {'document_root': '/Users/peter/projects/sbb/repos/roguesbb/frontend/media'}),
+            {'document_root': '/Users/peter/projects/sbb/repos/roguesbb/sbbfrontend/media'}),
             
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs' 
     # to INSTALLED_APPS to enable admin documentation:

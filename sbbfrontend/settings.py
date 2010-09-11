@@ -1,4 +1,4 @@
-# Django settings for frontend project.
+# Django settings for sbbfrontend project.
 import os
 PROJECT_ROOT = os.path.dirname(__file__)
 
@@ -77,7 +77,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-ROOT_URLCONF = 'frontend.urls'
+ROOT_URLCONF = 'sbbfrontend.urls'
 
 TEMPLATE_DIRS = (
     os.path.join(PROJECT_ROOT, 'templates'),
