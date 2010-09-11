@@ -1,59 +1,69 @@
 from django.db import models
+from django import forms
 
-class schedule(models.Model):
-    request_id = models.IntegerField()
-    connections = models.ForeignKey(connection)
+class Searchform(forms.Form):
+    station_from = forms.CharField(max_length=50)
+    station_to = forms.CharField(max_length=50)
+    station_via = forms.CharField(max_length=50)
+    date = forms.DateField(required=True)
+    time = forms.DateField(required=True)
     
-    def get():
-        return ''
-        
-    def getLater(schedules_request_id):
-        return ''
-        
-    def getEarlier(schedules_request_id):
-        return ''
-        
-
-class stations(models.Model):
-    def getFromString():
-        return ''
-
-    def getFromCoordinate():
-        return ''
-
-class station(models.Model):
+class Station(models.Model):
     station_id = models.IntegerField()
     station_name = models.CharField(max_length=100)
     station_coordinate = models.CharField(max_length=100)
     station_size = models.CharField(max_length=100)
     
-    def getInfo(station_id):
+    def getInfo(self, station_id):
         return ''
 
-
-class line(models.Model):
-    def getInfo(line_id):
-        return ''
-
-class connection(models.Model):
-    connection_id = models.IntegerField()
-    departure_station = models.ForeignKey(station)
-    arrival_station = models.ForeignKey(station)
-    connections = models.ForeignKey(fragment)
-    
-    def getInterruption(connection_id):
-        return ''
-
-class fragment(models.Model):
-    departure_station = models.ForeignKey(station)
-    arrival_station = models.ForeignKey(station)
+class Fragment(models.Model):
+    departure_station = models.ForeignKey(Station, related_name="frag_departure_station")
+    arrival_station = models.ForeignKey(Station, related_name="frag_arrival_station")
     departure_time = models.DateField()
     arrival_time = models.DateField()
     departure_platform = models.CharField(max_length=5)
     arrival_platform = models.CharField(max_length=5)
-    connections = models.ForeignKey(line)
+
+class Connection(models.Model):
+    connection_id = models.IntegerField()
+    departure_station = models.ForeignKey(Station, related_name="conn_departure_station")
+    arrival_station = models.ForeignKey(Station, related_name="conn_arrival_station")
+    fragment = models.ForeignKey(Fragment)
     
-class line(models.Model):
+    def getInterruption(self, connection_id):
+        return ''
+
+class Schedule(models.Model):
+    request_id = models.IntegerField()
+    connections = models.ForeignKey(Connection)
+    
+    def get(self):
+        return ''
+        
+    def getLater(self, schedules_request_id):
+        return ''
+        
+    def getEarlier(self, schedules_request_id):
+        return ''
+        
+
+class Stations(models.Model):
+    def getFromString(self):
+        return ''
+
+    def getFromCoordinate(self):
+        return ''
+
+class Line(models.Model):
     type = models.CharField(max_length=100)
     headsign = models.CharField(max_length=100)
     operator = models.CharField(max_length=100)
+
+    def getInfo(self, line_id):
+        return ''
+
+
+class Request(models.Model):
+    def getConnections(self):
+        return ['test', 'blah']

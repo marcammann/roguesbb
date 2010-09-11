@@ -1,0 +1,96 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+body{
+  color: #000;
+  background-color:#FFF;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size:16px;
+  
+  text-rendering:optimizelegibility;
+}
+div.wrapper {
+  margin:50px auto;
+  width:300px;
+}
+h2 {
+  margin-bottom: 20px;
+}
+form#search {
+  -moz-border-radius:10px;
+  -webkit-border-radius:10px;
+  border-radius:10px;
+  margin-bottom: 50px;
+} 
+form#search fieldset {
+  border: none;
+  margin-bottom: 10px;
+}
+form#search fieldset:last-of-type {
+  margin-bottom: 0;
+}
+form#search ol li {
+  line-height: 30px;
+  list-style: none;
+  margin-bottom: 3px;
+}
+form#search label {
+  float: left;
+  font-size: 14px;
+  width: 110px;
+  font-weight: bold;
+}
+form#search fieldset fieldset label {
+  background:none no-repeat left 50%;
+  line-height: 20px;
+  padding: 0 0 0 30px;
+  width: auto;
+}
+form#search input,
+form#search textarea {
+  background: #EEEEEE;
+  border: #AAAAAA 1px solid;
+  
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -khtml-border-radius: 3px;
+  border-radius: 3px;
+  
+  font-size: 13px;
+  
+  outline: none;
+  padding: 5px;
+  width: 175px;
+}
+form#search input:not([type=submit]):focus,
+form#search textarea:focus {
+  background: #DEECFF;
+  font-style: normal;  
+}
+form#search button {
+  color: #ffffff;
+  
+  background: #424242;
+
+  border: none;
+  -moz-border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -khtml-border-radius: 20px;
+  border-radius: 20px;
+
+  font-size: 16px;
+  letter-spacing: 1px;
+  
+  margin: 0;
+  display: block;
+  padding: 7px 25px;
+  float:right;
+  
+  text-shadow: 0 1px 1px #000000;
+  text-transform: uppercase;
+}
+form#search button:hover {
+  background: #868686;
+  cursor: pointer;
+}

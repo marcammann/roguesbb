@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>roguesbb</title>
+    <script src="/sitemedia/scripts/jquery-1.4.2.min.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="/sitemedia/style.css" />
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <div class="head">
+        <h2>Search</h2>
+      </div>
+      <div class="form">
+          <form id="search" action="/searchform" method="post">
+              <fieldset>
+                  <ol>
+                      {% for field in form %}
+                          <li>
+                              {{ field.errors }}
+                              {{ field.label_tag }}{{ field }}
+                          </li>
+                      {% endfor %}
+                  </ol>
+              </fieldset>
+              <fieldset>
+                  <button type="submit">Search</button>
+              </fieldset>
+          </form>
+      </div>
+      <div class="content">
+        {% if connections %}
+          <h2>Results</h2>
+          <!--
+          <ul class="connections">
+            {% for connection in connections %}              
+              <li>{{ connection }}</li>
+            {% endfor %}
+          </ul>
+          -->
+          ...
+        {% endif %}
+      </div>
+    </div>
+  </body>
+</html>

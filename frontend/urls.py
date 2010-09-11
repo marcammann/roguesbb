@@ -5,9 +5,12 @@ from django.conf.urls.defaults import *
 # admin.autodiscover()
 
 urlpatterns = patterns('',
-    # Example:
-    # (r'^frontend/', include('frontend.foo.urls')),
-
+    url(r'^$', 'searchform.views.form', name="home"),
+    url(r'^searchform$', 'searchform.views.searchform', name="blah"),
+    
+    (r'^sitemedia/(?P<path>.*)$', 'django.views.static.serve',
+            {'document_root': '/Users/peter/projects/sbb/repos/roguesbb/frontend/media'}),
+            
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs' 
     # to INSTALLED_APPS to enable admin documentation:
     # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
