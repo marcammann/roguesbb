@@ -8,13 +8,6 @@ from django.template import RequestContext
 from searchform.models import Searchform
 from searchform.controllers.api import SBBApi
 
-def form(request):
-    
-    return render_to_response('searchform/index.html', {
-        'today': today,
-        'time' : time
-    }, context_instance=RequestContext(request))
-
 def searchform(request):
     connections = ''
     
