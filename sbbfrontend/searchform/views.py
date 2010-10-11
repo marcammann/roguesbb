@@ -5,32 +5,31 @@ from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
-from searchform.models import Request, Searchform
+from searchform.models import Searchform
+from searchform.controllers.api import SBBApi
 
 def form(request):
-    arequest = Request()
-    connections = arequest.getConnections()
-    today = date.today().strftime("%Y-%m-%d")
-    time = datetime.now().strftime("%H:%M")
     
     return render_to_response('searchform/index.html', {
-        'connections': connections,
         'today': today,
         'time' : time
     }, context_instance=RequestContext(request))
 
 def searchform(request):
-    result = ''
+    connections = ''
     
     if request.method == 'POST':
         form = Searchform(request.POST)
         if form.is_valid():
-            results = 'yay'
             # Get connections via API
+            sbbapi = SBBApi('')
+            connections = sbbapi.getConnections(form.cleaned_data['station_from'])
+
     else:
         form = Searchform()
-        
-    return render_to_response('searchform/searchform.html', {
-        'form': form,
-        'results': result
-    })
+    
+    return render_to_response('searchform/form.html', {
+            'form': form,
+            'connections': connections
+        }, context_instance=RequestContext(request)
+    )

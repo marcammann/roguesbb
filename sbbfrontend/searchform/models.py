@@ -62,8 +62,3 @@ class Line(models.Model):
 
     def getInfo(self, line_id):
         return ''
-
-
-class Request(models.Model):
-    def getConnections(self):
-        return ['test', 'blah']

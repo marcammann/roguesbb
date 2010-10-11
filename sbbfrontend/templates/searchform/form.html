@@ -13,7 +13,8 @@
         <h2>Search</h2>
       </div>
       <div class="form">
-          <form id="search" action="/searchform" method="post">
+          <form id="search" action="/searchform/" method="post">
+              {% csrf_token %}
               <fieldset>
                   <ol>
                       {% for field in form %}
@@ -31,15 +32,15 @@
       </div>
       <div class="content">
         {% if connections %}
-          <h2>Results</h2>
-          <!--
-          <ul class="connections">
-            {% for connection in connections %}              
-              <li>{{ connection }}</li>
-            {% endfor %}
-          </ul>
-          -->
-          ...
+            <h2>Results</h2>
+                <ul class="connections">
+                    <!--
+                    {% for connection in connections %}              
+                      <li>{{ connection }}</li>
+                    {% endfor %}
+                    -->
+                    <li>{{ connections }}</li>
+                </ul>
         {% endif %}
       </div>
     </div>
