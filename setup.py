@@ -12,7 +12,7 @@ setup(
     name = "SBB",
     version = "0.0.1",
     author = "Peter Manser, Marc Ammann",
-    author_email = "peter.manser@liip.ch, marc@partiql.com",
+    author_email = "mail@petermanser.ch, marc@partiql.com",
     description = (""),
     license = "Apache License",
     keywords = "sbb api",
