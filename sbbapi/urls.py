@@ -6,5 +6,5 @@ from django.conf.urls.defaults import *
 
 urlpatterns = patterns('',
    # all my other url mappings
-   (r'^api/', include('sbbapi.core.urls')),
+   (r'^sbb/1.0', include('sbbapi.v1_0.urls')),
 )
