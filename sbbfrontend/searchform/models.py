@@ -2,11 +2,12 @@ from django.db import models
 from django import forms
 
 class Searchform(forms.Form):
-    station_from = forms.CharField(max_length=50)
-    station_to = forms.CharField(max_length=50)
-    station_via = forms.CharField(max_length=50)
+    station_from = forms.CharField(max_length=50,required=True)
+    station_to = forms.CharField(max_length=50,required=True)
+    station_via = forms.CharField(max_length=50,required=False)
     date = forms.DateField(required=True)
     time = forms.DateField(required=True)
+    isat = forms.CheckBox(value=True)
     
 class Station(models.Model):
     station_id = models.IntegerField()
