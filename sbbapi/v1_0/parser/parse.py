@@ -10,6 +10,8 @@ def date_from_sbbdate(sbbdate):
 
 
 def station_from_node(node):
+	""" Parses Station data from node (lxml) """
+	
 	station = {
 		'station_name': node.get("name"),
 		'station_coordinates': {
@@ -25,6 +27,9 @@ def station_from_node(node):
 	
 	
 def platformtime_from_node(node):
+	""" Parses time and platform, returns empty string for platform if
+	it's not set """
+	
 	sbbtime = node.find(".//Time").text.strip()
 	platform = node.find(".//Platform/Text").text
 	if platform:
@@ -40,7 +45,13 @@ def platformtime_from_node(node):
 	return retval
 	
 	
-def stop_from_node(node, subgroup=False):	
+def stop_from_node(node, subgroup=False):
+	""" Parses a stop from a node. A Stop has a station and departure/arrival
+	values for time/platform. If both are set, they are subgrouped in 
+	'arrival' and 'departure' nodes.
+	If `subgroup` is set to true, then the node for time/platform is put into
+	the respective supgroup """
+		
 	retval = {}
 	
 	station_node = node.find(".//Station")
@@ -74,6 +85,9 @@ def stop_from_node(node, subgroup=False):
 	
 
 def segments_from_node(node):
+	""" Parses the intermediate stops and changes and vehicles for all the
+	parts of one fragment """
+	
 	# Segments (crazy stuff... whoever did this at Hacon was an asshole)
 	unique_nodes = node.xpath('./JourneyAttributeList/JourneyAttribute[Attribute/@type="NAME"]')
 	segments = [(int(n.get('from')), int(n.get('to'))) for n in unique_nodes]
@@ -101,6 +115,10 @@ def segments_from_node(node):
 		
 		
 def connection_from_node(node, extensive):
+	""" Parses the connection data like duration etc. from a node.
+	If extensive is true, then intermediate stops are included, if not,
+	then only the from/to values are returned and some overview data. """
+	
 	date = date_from_sbbdate(node.find(".//Overview/Date").text).strftime('%Y-%m-%d')
 	
 	print repr(node.find(".//Overview/Departure/BasicStop"))
@@ -134,6 +152,8 @@ def connection_from_node(node, extensive):
 
 
 def fragment_from_node(node):
+	""" Parses a fragment of a connection. Consists of multipe segments,
+	a departure stop and arrival stop """
 	departure_info = stop_from_node(node.find("./Departure/BasicStop"))
 	arrival_info = stop_from_node(node.find("./Arrival/BasicStop"))
 	
@@ -153,6 +173,7 @@ def fragment_from_node(node):
 
 
 class StationsParser(object):
+	""" Parser for Station Request """
 	def __init__(self, content):
 		self.root = etree.fromstring(content)
 		
@@ -170,6 +191,7 @@ class StationsParser(object):
 		
 		
 class SchedulesParser(object):
+	""" Parser for Schedule Request """
 	def __init__(self, content):
 		self.root = etree.fromstring(content)
 		

@@ -8,3 +8,4 @@ wsgiref==0.1.2
 httplib2==0.6.0
 lxml==2.3beta1
 python-memcached==1.45
+Paver==1.0.3

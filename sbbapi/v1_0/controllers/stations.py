@@ -9,6 +9,7 @@ from lxml import etree
 class StationsController(BaseController):
 	entry_url = 'http://xmlfahrplan.sbb.ch/bin/extxml.exe/'
 	
+	@GET
 	def getFromString(self, request):
 		param_station_query = request.GET.get('station_query', None)
 		
@@ -22,8 +23,7 @@ class StationsController(BaseController):
 		h = Http()
 		resp, content = h.request(self.entry_url, "POST", request_content)
 		if resp['status'] != '200':
-			# TODO: Error Handling Here!
-			return
+			raise SBBRequestError(resp)
 		
 		parser = parse.StationsParser(content)
 		stations = parser.stations()

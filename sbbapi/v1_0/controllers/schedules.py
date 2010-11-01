@@ -9,21 +9,6 @@ from urllib import urlencode
 
 from lxml import etree
 
-"""
-<ReqC lang="EN" prod="iPhone3.1" ver="2.3" accessId="MJXZ841ZfsmqqmSymWhBPy5dMNoqoGsHInHbWJQ5PTUZOJ1rLTkn8vVZOZDFfSe">
-	<ConReq>
-		<Start>
-			<Station name="Zrich Hardbrcke" externalId="008503020#95" />
-			<Prod prod="1111111111000000" />
-		</Start>
-		<Dest>
-			<Station name="Winterthur" externalId="008506000#85" />
-		</Dest>
-		<ReqT a="0" date="20101027" time="11:44" />
-		<RFlags b="0" f="4" sMode="N" />
-	</ConReq>
-</ReqC>
-"""
 
 class SchedulesController(BaseController):
 	entry_url = 'http://xmlfahrplan.sbb.ch/bin/extxml.exe/'
@@ -79,8 +64,7 @@ class SchedulesController(BaseController):
 		h = Http()
 		resp, content = h.request(self.entry_url, "POST", request_content)
 		if resp['status'] != '200':
-			# TODO: Error Handling Here!
-			return
+			raise SBBRequestError(resp)
 		
 		parser = parse.SchedulesParser(content)
 		connections = parser.connections(extensive = param_extensive)
@@ -93,13 +77,13 @@ class SchedulesController(BaseController):
 		
 		
 	@GET
-	def getLater(self, params):
-		pass
+	def getLater(self, request):
+		raise NotYetImplemented()
 	
 	
 	@GET
-	def getEarlier(self, params):
-		pass
+	def getEarlier(self, request):
+		raise NotYetImplemented()
 	
 	
 	
