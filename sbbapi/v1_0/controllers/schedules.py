@@ -1,5 +1,6 @@
 from sbbapi.v1_0.controllers.base import *
 from sbbapi.error import *
+from sbbapi.v1_0.parser import parse
 
 from datetime import datetime
 
@@ -72,54 +73,18 @@ class SchedulesController(BaseController):
 		<RFlags b="0" f="6" sMode="N" />
 	</ConReq>
 </ReqC>""".format(departure_id=param_departure_id, arrival_id=param_arrival_id, is_arrival_time='%i' % (is_arrival_time), formatted_date=formatted_date, formatted_time=formatted_time, means_mask=param_means_mask)
-
-
+		
 		print request_content
-
+		
 		h = Http()
 		resp, content = h.request(self.entry_url, "POST", request_content)
 		if resp['status'] != '200':
 			# TODO: Error Handling Here!
 			return
 		
-		root = etree.fromstring(content)
-		request_id = root.find(".//ConResCtxt").text
-		
-		connection_nodes = root.findall(".//ConnectionList/Connection")
-		connections = []
-		for node in connection_nodes:
-			date = node.find(".//Overview/Date").text
-			departure_node = node.find(".//Overview/Departure/BasicStop/Station")
-			departure = {
-				'station_name': departure_node.get('name')
-			}
-			departure_time = node.find(".//Overview/Departure/BasicStop/Dep/Time").text
-			departure_platform = node.find(".//Overview/Departure/BasicStop/Dep/Platform/Text").text
-			
-			arrival_node = node.find(".//Overview/Arrival/BasicStop/Station")
-			arrival = {
-				'station_name': arrival_node.get('name')
-			}
-			arrival_time = node.find(".//Overview/Arrival/BasicStop/Arr/Time").text
-			arrival_platform = node.find(".//Overview/Arrival/BasicStop/Arr/Platform/Text").text
-			
-			duration = node.find(".//Overview/Duration/Time").text
-			transfers = node.find(".//Overview/Transfers").text
-			
-			conn = {
-				'connection_date': date,
-				'departure_station': departure,
-				'departure_time': departure_time,
-				'departure_platform': departure_platform,
-				'arrival_station': arrival,
-				'arrival_time': arrival_time,
-				'arrival_platform': arrival_platform,
-				'connection_duration': duration,
-				'connection_transfers': transfers,
-			}
-			
-			connections.append(conn)
-		
+		parser = parse.SchedulesParser(content)
+		connections = parser.connections(extensive = param_extensive)
+		request_id = parser.request_id()
 		
 		return {
 			'request_id':request_id,

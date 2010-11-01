@@ -1,4 +1,5 @@
 from sbbapi.v1_0.controllers.base import *
+from sbbapi.v1_0.parser import parse
 
 from httplib2 import Http
 from urllib import urlencode
@@ -24,27 +25,10 @@ class StationsController(BaseController):
 			# TODO: Error Handling Here!
 			return
 		
-		root = etree.fromstring(content)
-		results = root.findall(".//LocValRes/*")
+		parser = parse.StationsParser(content)
+		stations = parser.stations()
 		
-		stations = []
-		for result in results:
-			if result.tag == 'Station':
-				station = {
-					'station_name': result.get("name"),
-					'station_coordinate': {
-						'latitude': result.get("x"),
-						'longitude': result.get("y"),
-					},
-					'station_id': result.get("externalId"),
-					'station_type': 'Station',
-				}
-				
-				stations.append(station)
+		retval = {'stations':stations}
 		
-		if len(stations) == 0:
-			# TODO: Error Handling Here!
-			return
-		
-		return stations
+		return retval
 		
