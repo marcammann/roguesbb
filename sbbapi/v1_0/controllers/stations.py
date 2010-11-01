@@ -1,4 +1,5 @@
 from sbbapi.v1_0.controllers.base import *
+from sbbapi.v1_0.parser import parse
 
 from httplib2 import Http
 from urllib import urlencode
@@ -8,6 +9,7 @@ from lxml import etree
 class StationsController(BaseController):
 	entry_url = 'http://xmlfahrplan.sbb.ch/bin/extxml.exe/'
 	
+	@GET
 	def getFromString(self, request):
 		param_station_query = request.GET.get('station_query', None)
 		
@@ -21,30 +23,12 @@ class StationsController(BaseController):
 		h = Http()
 		resp, content = h.request(self.entry_url, "POST", request_content)
 		if resp['status'] != '200':
-			# TODO: Error Handling Here!
-			return
+			raise SBBRequestError(resp)
 		
-		root = etree.fromstring(content)
-		results = root.findall(".//LocValRes/*")
+		parser = parse.StationsParser(content)
+		stations = parser.stations()
 		
-		stations = []
-		for result in results:
-			if result.tag == 'Station':
-				station = {
-					'station_name': result.get("name"),
-					'station_coordinate': {
-						'latitude': result.get("x"),
-						'longitude': result.get("y"),
-					},
-					'station_id': result.get("externalId"),
-					'station_type': 'Station',
-				}
-				
-				stations.append(station)
+		retval = {'stations':stations}
 		
-		if len(stations) == 0:
-			# TODO: Error Handling Here!
-			return
-		
-		return stations
+		return retval
 		
