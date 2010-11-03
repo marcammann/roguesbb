@@ -1,15 +1,34 @@
-import urllib2
-import json as simplejson
+#from httplib2 import Http
+import httplib2
+
+DEFAULT_TIMEOUT=10 #seconds
+HOST='http://core01-eu.partiql.net:8002/sbb/1.0/'
+
+class ConnectionHandler:
+    def __init__(self, ssl=False, cache=None, timeout=DEFAULT_TIMEOUT, proxy_info=None):
+        self.ssl = ssl
+        self.cache = cache
+        self.timeout = timeout
+        self.proxy_info = proxy_info
+        
+    def open(self):
+        self.http = httplib2.Http(self.cache, self.timeout, self.proxy_info)
+        return True
+
+    def request(self, request):
+        #connection_type = HTTPSConnection if self.ssl else HTTPConnection
+        print HOST+request.uri
+        
+        response, content = self.http.request(HOST+request.uri, "GET", None, None, httplib2.DEFAULT_MAX_REDIRECTS)#, connection_type)
+        
+        return {
+            'response':response,
+            'content':content,
+        }
+        
 
 class ConnectionException(Exception):
     def __init__(self, msg):
         self.msg = msg
     def __str__(self):
         return repr(self.msg)
-
-class ConnectionHandler:
-    def __init__(self):
-        pass
-
-    def open(self):
-        pass

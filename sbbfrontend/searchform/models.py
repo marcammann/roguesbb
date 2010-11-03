@@ -1,13 +1,15 @@
+import datetime
+
 from django.db import models
 from django import forms
 
 class Searchform(forms.Form):
-    station_from = forms.CharField(max_length=50,required=True)
-    station_to = forms.CharField(max_length=50,required=True)
+    station_from = forms.CharField(max_length=50,required=True,help_text='A valid station, please.')
+    station_from_id = forms.CharField(required=True, initial='008504100')
+    station_to = forms.CharField(max_length=50,required=True, initial='008503020')
     station_via = forms.CharField(max_length=50,required=False)
-    date = forms.DateField(required=True)
-    time = forms.DateField(required=True)
-    isat = forms.CheckBox(value=True)
+    date = forms.DateField(required=True, initial=datetime.date.today)
+    time = forms.TimeField(required=True, initial=datetime.time)
     
 class Station(models.Model):
     station_id = models.IntegerField()
@@ -50,9 +52,9 @@ class Schedule(models.Model):
         
 
 class Stations(models.Model):
-    def getFromString(self):
-        return ''
-
+    def getIDFromString(self, text):
+        pass
+        
     def getFromCoordinate(self):
         return ''
 

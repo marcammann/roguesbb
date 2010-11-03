@@ -1,3 +1,4 @@
+from searchform.controllers.SchedulesHandler import SchedulesHandler
 
 #searchform (with response)
 def searchform(request):

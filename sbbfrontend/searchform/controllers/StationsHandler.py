@@ -10,12 +10,12 @@ class StationsHandler:
         
         #stations.getFromString?station_query=Winterthur
         request = Request('stations', 'getFromString', {'station_query':station_query})
-
+        
         sbbapi = SBBApi
         response = Response(sbbapi.open(request))
         
-        self.response = response.get
-        
+        self.response = response.get()
+    
     def render(self, themepath):
         return render_to_response(themepath, {
                 'response': self.response

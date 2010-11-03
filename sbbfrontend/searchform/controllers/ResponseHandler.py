@@ -1,14 +1,16 @@
-import json as simplejson
+import json
 
 class ResponseHandler:
     def __init__(self, resp):
-        self.response = resp
+        self.response = resp['response']
+        self.content = resp['content']
 
-    def check(self, resp):
-        if resp['request_id']:
-            return true
+    def check(self):
+        if self.response['status'] == '200':
+            return True
         else:
-            return false
+            return False
             
     def get(self):
-        return self.response
+        resp = json.loads(self.content)
+        return resp['connections']

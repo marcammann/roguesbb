@@ -17,12 +17,12 @@
               {% csrf_token %}
               <fieldset>
                   <ol>
-                      {% for field in form %}
-                          <li>
-                              {{ field.errors }}
-                              {{ field.label_tag }}{{ field }}
-                          </li>
-                      {% endfor %}
+                    {% for field in form %}
+                        <li>
+                            {{ field.errors }}
+                            {{ field.label_tag }}{{ field }}
+                        </li>
+                    {% endfor %}
                   </ol>
               </fieldset>
               <fieldset>
@@ -31,15 +31,15 @@
           </form>
       </div>
       <div class="content">
-        {% if connections %}
+        {% if response %}
             <h2>Results</h2>
                 <ul class="connections">
-                    <!--
-                    {% for connection in connections %}              
-                      <li>{{ connection }}</li>
+                    {% for schedule in response %}
+                        <li>
+                          <b>{{ schedule.departure.station.station_name }}</b> to <b>{{ schedule.arrival.station.station_name }}</b><br />
+                          at {{ schedule.departure.time }} - {{ schedule.arrival.time }} ({{ schedule.duration }})
+                        </li>
                     {% endfor %}
-                    -->
-                    <li>{{ connections }}</li>
                 </ul>
         {% endif %}
       </div>
