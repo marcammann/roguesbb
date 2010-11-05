@@ -59,6 +59,7 @@ stations:
 	stations.getFromString
 		params:
 			station_query: string to search for, like "Züri"
+			[limit, returns all matching stations if not set]: Count stations to return (ex. for autocomplete).
 		
 		returns:
 			{TYPE:station}
