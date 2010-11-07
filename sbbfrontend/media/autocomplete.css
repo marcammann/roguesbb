@@ -1,0 +1,70 @@
+div#autocomplete_wrapper {
+  width: 250px;
+  float: right;
+}
+
+#autocomplete_wrapper #autocomplete {
+    position:relative;
+    padding:15px;
+    margin-left:30px;
+    font-size: 13px;
+    color: #FFFFFF;
+    background:#2E88C4; /* default background for browsers without gradient support */
+    
+    /* css3 */
+    -moz-border-radius:10px;
+    -webkit-border-radius:10px;
+    -khtml-border-radius: 10px;
+    border-radius:10px;
+    
+    /* NOTE: webkit gradient implementation is not as per spec */
+    /*
+    background:-webkit-gradient(linear, left top, left bottom, from(#2E88C4), to(#075698));
+    background:-moz-linear-gradient(top, #2E88C4, #075698);
+    background:-o-linear-gradient(top, #2E88C4, #075698);
+    background:linear-gradient(top, #2E88C4, #075698);
+    */
+
+    background:-webkit-gradient(linear, left top, left bottom, from(#737373), to(#474747));
+    background:-moz-linear-gradient(top, #737373, #474747);
+    background:-o-linear-gradient(top, #737373, #474747);
+    background:linear-gradient(top, #737373, #474747);
+}
+#autocomplete_wrapper #autocomplete:after {
+    /* border-color: transparent #2E88C4; */
+    border-color: transparent #737373;
+    border-width: 7px 20px 7px 0px;
+    bottom: auto;
+    left: -20px;
+    top: 10px;
+    
+    border-style: solid;
+    content: '';
+    display: block;
+    height: 0px;
+    position: absolute;
+    width: 0px;   
+}
+
+#autocomplete.margin-top {
+  margin-top:30px;
+}
+
+#autocomplete_wrapper #autocomplete ul {
+  list-style: none;
+}
+
+#autocomplete_wrapper #autocomplete ul li {
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -khtml-border-radius: 3px;
+  border-radius: 3px;
+  
+  outline: none;
+  padding: 5px;
+}
+
+#autocomplete_wrapper #autocomplete ul li.active {
+  color: #000000;
+  background-color: #DEECFF;
+}

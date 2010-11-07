@@ -3,8 +3,10 @@
   <head>
     <title>roguesbb</title>
     <script src="/sitemedia/scripts/jquery-1.4.2.min.js"></script>
-    
+    <script src="/sitemedia/scripts/autocomplete.js"></script>
+
     <link rel="stylesheet" type="text/css" href="/sitemedia/style.css" />
+    <link rel="stylesheet" type="text/css" href="/sitemedia/autocomplete.css" />
   </head>
 
   <body>
@@ -12,36 +14,43 @@
       <div class="head">
         <h2>Search</h2>
       </div>
-      <div class="form">
-          <form id="search" action="/searchform/" method="post">
-              {% csrf_token %}
-              <fieldset>
-                  <ol>
-                    {% for field in form %}
-                        <li>
-                            {{ field.errors }}
-                            {{ field.label_tag }}{{ field }}
-                        </li>
-                    {% endfor %}
-                  </ol>
-              </fieldset>
-              <fieldset>
-                  <button type="submit">Search</button>
-              </fieldset>
-          </form>
+      <div class="form_wrapper">
+          <div class="form">
+            <form id="search" action="/searchform/" method="post">
+                {% csrf_token %}
+                <input type="hidden" id="id_station_from_station_id" name="id_station_from_station_id">
+                <input type="hidden" id="id_station_to_station_id" name="id_station_to_station_id">
+                <fieldset>
+                    <ol>
+                      {% for field in form %}
+                          <li>
+                              {{ field.errors }}
+                              {{ field.label_tag }}{{ field }}
+                          </li>
+                      {% endfor %}
+                    </ol>
+                </fieldset>
+                <fieldset>
+                    <button type="submit">Search</button>
+                </fieldset>
+            </form>
+          </div>
+          <div id="autocomplete_wrapper"></div>
       </div>
-      <div class="content">
-        {% if response %}
-            <h2>Results</h2>
-                <ul class="connections">
-                    {% for schedule in response %}
-                        <li>
-                          <b>{{ schedule.departure.station.station_name }}</b> to <b>{{ schedule.arrival.station.station_name }}</b><br />
-                          at {{ schedule.departure.time }} - {{ schedule.arrival.time }} ({{ schedule.duration }})
-                        </li>
-                    {% endfor %}
-                </ul>
-        {% endif %}
+      <div class="content_wrapper">
+        <div class="content">
+          {% if response %}
+              <h2>Results</h2>
+                  <ul class="connections">
+                      {% for schedule in response %}
+                          <li>
+                            <b>{{ schedule.departure.station.station_name }}</b> to <b>{{ schedule.arrival.station.station_name }}</b><br />
+                            at {{ schedule.departure.time }} - {{ schedule.arrival.time }} ({{ schedule.duration }})
+                          </li>
+                      {% endfor %}
+                  </ul>
+          {% endif %}
+        </div>
       </div>
     </div>
   </body>

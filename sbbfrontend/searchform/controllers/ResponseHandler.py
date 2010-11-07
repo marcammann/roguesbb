@@ -13,4 +13,15 @@ class ResponseHandler:
             
     def get(self):
         resp = json.loads(self.content)
+        return resp
+        
+        
+class ResponseConnectionHandler(ResponseHandler):
+    def get(self):
+        resp = json.loads(self.content)
         return resp['connections']
+
+class ResponseStationHandler(ResponseHandler):
+    def get(self):
+        resp = json.loads(self.content)
+        return resp['stations']

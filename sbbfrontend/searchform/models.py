@@ -4,12 +4,12 @@ from django.db import models
 from django import forms
 
 class Searchform(forms.Form):
-    station_from = forms.CharField(max_length=50,required=True,help_text='A valid station, please.')
-    station_from_id = forms.CharField(required=True, initial='008504100')
-    station_to = forms.CharField(max_length=50,required=True, initial='008503020')
-    station_via = forms.CharField(max_length=50,required=False)
-    date = forms.DateField(required=True, initial=datetime.date.today)
-    time = forms.TimeField(required=True, initial=datetime.time)
+    station_from = forms.CharField(max_length=50,required=True)
+    station_to = forms.CharField(max_length=50,required=True)
+    #station_via = forms.CharField(max_length=50,required=False)
+    date = forms.DateField(required=True, initial=datetime.datetime.now().strftime('%m.%d.%y'))
+    time = forms.TimeField(required=True, initial=datetime.datetime.now().strftime('%H:%M'))
+        
     
 class Station(models.Model):
     station_id = models.IntegerField()
