@@ -1,12 +1,13 @@
 div#autocomplete_wrapper {
-  width: 250px;
+  width: 200px;
   float: right;
 }
 
 #autocomplete_wrapper #autocomplete {
     position:relative;
     padding:15px;
-    margin-left:30px;
+    margin-top:20px;
+    margin-left:20px;
     font-size: 13px;
     color: #FFFFFF;
     background:#2E88C4; /* default background for browsers without gradient support */
@@ -47,7 +48,7 @@ div#autocomplete_wrapper {
 }
 
 #autocomplete.margin-top {
-  margin-top:30px;
+  margin-top:50px;
 }
 
 #autocomplete_wrapper #autocomplete ul {
@@ -55,10 +56,10 @@ div#autocomplete_wrapper {
 }
 
 #autocomplete_wrapper #autocomplete ul li {
+  border-radius: 3px;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
   -khtml-border-radius: 3px;
-  border-radius: 3px;
   
   outline: none;
   padding: 5px;

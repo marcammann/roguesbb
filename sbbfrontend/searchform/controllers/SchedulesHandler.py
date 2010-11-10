@@ -1,4 +1,3 @@
-import pprint
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -45,12 +44,10 @@ class SchedulesHandler:
                 else:
                     params['departure_time'] = ftimestamp
                 
-                pprint.pprint(params)
+                params['extensive'] = 1
                 
-                #req = RequestHandler('schedules', 'query', {'departure_id': departure_id, 'arrival_id': arrival_id, 'is_arrival_time': is_arrival_time, 'date': date, 'time':time})
-                #req = RequestHandler('schedules', 'query', {'departure_id': departure_id, 'arrival_id': arrival_id})
+                
                 req = RequestHandler('schedules', 'query', params) 
-                
                 
                 sbbapi = SBBApi()
                 sbbapi.open()

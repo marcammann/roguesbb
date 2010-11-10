@@ -4,9 +4,11 @@
     <title>roguesbb</title>
     <script src="/sitemedia/scripts/jquery-1.4.2.min.js"></script>
     <script src="/sitemedia/scripts/autocomplete.js"></script>
+    <script src="/sitemedia/scripts/result.js"></script>
 
     <link rel="stylesheet" type="text/css" href="/sitemedia/style.css" />
     <link rel="stylesheet" type="text/css" href="/sitemedia/autocomplete.css" />
+    <link rel="stylesheet" type="text/css" href="/sitemedia/result.css" />
   </head>
 
   <body>
@@ -41,14 +43,87 @@
         <div class="content">
           {% if response %}
               <h2>Results</h2>
-                  <ul class="connections">
-                      {% for schedule in response %}
-                          <li>
-                            <b>{{ schedule.departure.station.station_name }}</b> to <b>{{ schedule.arrival.station.station_name }}</b><br />
-                            at {{ schedule.departure.time }} - {{ schedule.arrival.time }} ({{ schedule.duration }})
+                  {% for schedule in response %}
+                      <div class="results">
+                        <h3 class="result">
+                          <a href="#">
+                            {{ schedule.departure.station.station_name }} dep. {{ schedule.departure.time }} / {{ schedule.arrival.station.station_name }} arr. {{ schedule.arrival.time }}
+                          </a>
+                        </h3>
+                        <div class="toggle_container">
+                          <div class="block">
+                            <a href="#" class="showall">show all stopovers</a>
+                            <table class="stops">
+                              <thead>
+                                <tr>
+                                  <th scope="col" class="station">Station</th>
+                                  <th scope="col" class="time">Time</th>
+                                  <th scope="col" class="platform">Platform</th>
+                                </tr>
+                              </thead>
+                              <tfoot>
+                                <tr>
+                                  <td>Date: {{ schedule.date }}</td>
+                                  <td colspan="2">Duration: {{ schedule.duration }}</td>
+                                </tr>
+                              </tfoot>
+                                {% for fragment in schedule.fragments %}
+                                  <tbody{% if forloop.first %} class="first"{% endif %}>
+                                  {% for stops in fragment %}
+                                    {% for stop in stops.stops %}
+                                      {% if forloop.last %}
+                                        <tr class="last">
+                                          <td class="station">{{ stop.station.station_name }}</td>
+                                          <td class="time">< {{ stop.arrival.time }}</td>
+                                          <td class="platform">{{ stop.arrival.platform }}</td>
+                                        </tr>
+                                        
+                                      {% else %}
+                                        {% if forloop.first %}
+                                          <tr class="first">
+                                            <td class="station">{{ stop.station.station_name }}</td>
+                                            <td class="time">> {{ stop.departure.time }}</td>
+                                            <td class="platform">{{ stop.departure.platform }}</td>
+                                          </tr>
+                                          
+                                        {% else %}
+                                          {% if forloop.counter == 2 %}
+                                            <tr class="showmore">
+                                              <td colspan="3"><a href="#">...</a></td>
+                                            </tr>
+                                          {% endif %}
+                                          
+                                          <tr class="stopover">
+                                            <td class="station">{{ stop.station.station_name }}</td>
+                                            <td class="time">... {{ stop.departure.time }}</td>
+                                            <td class="platform">{{ stop.departure.platform }}</td>
+                                          </tr>
+                                        {% endif %}
+                                      {% endif %}
+                                    {% endfor %}
+                                  {% endfor %}
+                                  </tbody>
+                                {% endfor %}
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    
+                      <!--
+                      <li class="connection">
+                        <ul>
+                          <li class="header">
+                            <p class="main">
+                              {{ schedule.departure.station.station_name }} {{ schedule.departure.time }} (Gleis {{ schedule.departure.platform }})<br />
+                              {{ schedule.arrival.station.station_name }} {{ schedule.arrival.time }} (Gleis {{ schedule.arrival.platform }})<br />
+                              on {{ schedule.date }}, takes ({{ schedule.duration }})
+                            </p>
                           </li>
-                      {% endfor %}
-                  </ul>
+                          <li></li>
+                        </ul>
+                      </li>
+                      -->
+                  {% endfor %}
           {% endif %}
         </div>
       </div>

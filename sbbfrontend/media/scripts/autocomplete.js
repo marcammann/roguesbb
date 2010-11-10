@@ -11,6 +11,23 @@ $(document).ready(
     var divac_css_id = 'autocomplete';
     var input = '';
     
+    var keys = {
+      tab: 9,
+      ret: 13,
+      esc: 27,
+      up: 38,
+      down: 40
+    };
+    
+    field = field1;
+    console.log($('#'+$(field).attr('id')+'_station_id').val());
+    if ($('#'+$(field).attr('id')+'_station_id').val() > 0) {
+      $(field).addClass('valid');
+    }
+    field = field2;
+    if ($('#'+$(field).attr('id')+'_station_id').val() > 0) {
+      $(field).addClass('valid');
+    }
     
     $(field1).attr('autocomplete', 'off').keydown(
       function(event) {
@@ -24,6 +41,7 @@ $(document).ready(
     );
     $(field1).focusout(
       function(event) {
+        checkValid();
         field = null;
         hideBox();
       }
@@ -31,6 +49,7 @@ $(document).ready(
     $(field1).focusin(
       function(event) {
         field = $(field1);
+        checkValid(field);
       }
     );
     
@@ -47,6 +66,7 @@ $(document).ready(
     );
     $(field2).focusout(
       function(event) {
+        checkValid();
         field = null;
         hideBox();
       }
@@ -54,7 +74,7 @@ $(document).ready(
     $(field2).focusin(
       function(event) {
         field = $(field2);
-        refreshSuggestions(event);
+        checkValid(field);
       }
     );
     
@@ -62,10 +82,9 @@ $(document).ready(
       if (text) $(field).val(text);
       $('#'+$(field).attr('id')+'_station_id').val(value);
       
-      console.log('#'+$(field).attr('id')+'_station_id');
       $(field).removeClass();
       if (value > 0) {
-        $(field).addClass('ok');
+        $(field).addClass('valid');
       }
     }
     function checkState(event)
@@ -83,7 +102,7 @@ $(document).ready(
       divac = $(cont).children('#'+divac_css_id);
       if ($(divac).length) {
         var active = $(divac).find('ul li.result.active');
-      
+        
         if ($(active).length) {
           if (val == 1) active.next('li.result').addClass('active');
           else if (val == -1) active.prev('li.result').addClass('active');
@@ -105,31 +124,24 @@ $(document).ready(
     }
     
     function controlKey(event) {
-      var keys = {
-        tab: 9,
-        ret: 13,
-        esc: 27,
-        up: 38,
-        down: 40
-      };
       switch (event.keyCode) {
         case keys.up:
             event.preventDefault();
             selectItem(-1);
             break;
-      
+        
         case keys.down:
             event.preventDefault();
             selectItem(1);
             break;
-          
+        
         case keys.ret:
           event.preventDefault();
           var active = $(divac).find('ul li.result.active');
           hideBox();
           $(field).parent().next().children('input').focus();
           break;
-          
+        
         case keys.esc:
           event.preventDefault();
           setValue(0, last);
@@ -138,14 +150,29 @@ $(document).ready(
       }
     }
     
+    function checkValid() {
+      input = $(field).val();
+      
+      if (input.length >= 1) {
+        $.getJSON(
+          encodeURI("http://core01-eu.partiql.net:8002/sbb/1.0/stations.getFromString?callback=?"),
+          {
+            station_query: input
+          },
+          function (data) {
+            if (data.stations.length == 1) {
+              setValue(data.stations[0].station_id);
+            } else {
+              setValue(0);
+            }
+          }
+        );
+      } else {
+        setValue(0);
+      }
+    }
+    
     function refreshSuggestions(event) {
-      var keys = {
-        tab: 9,
-        ret: 13,
-        esc: 27,
-        up: 38,
-        down: 40
-      };
       input = $(field).val();
       
       switch (event.keyCode) {
@@ -157,8 +184,6 @@ $(document).ready(
           break;
         
         default:
-          console.log('refesh for '+input);
-          event.preventDefault();
           if (input != last) {
             last = input;
             
@@ -189,7 +214,6 @@ $(document).ready(
                     });
                     
                     if (data.stations.length == 1) {
-                      console.log('set value because 1 result!');
                       var active = $(divac).find('ul li.result:first');
                       setValue($(active).attr('id'));
                     } else {

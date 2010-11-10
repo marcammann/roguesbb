@@ -19,19 +19,23 @@ h2 {
 }
 div.form {
   width: 300px;
+  padding: 20px;
+/*  background-color: #F0F0F0;*/
   float: left;
+  border: 1px solid #D6D6D6;
+  border-radius: 10px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -khtml-border-radius: 10px;
+  
+  -webkit-box-shadow: 0 3px 6px rgba(0,0,0,.25);
+  -moz-box-shadow: 0 3px 6px rgba(0,0,0,.25);
 }
 
 div.content_wrapper {
   clear:both;
   padding-top: 20px;
 }
-form#search {
-  -moz-border-radius:10px;
-  -webkit-border-radius:10px;
-  border-radius:10px;
-  margin-bottom: 50px;
-} 
 form#search fieldset {
   border: none;
   margin-bottom: 10px;
@@ -50,12 +54,6 @@ form#search label {
   width: 110px;
   font-weight: bold;
 }
-form#search fieldset fieldset label {
-  background:none no-repeat left 50%;
-  line-height: 20px;
-  padding: 0 0 0 30px;
-  width: auto;
-}
 form#search input,
 form#search textarea {
   background: #EEEEEE;
@@ -73,29 +71,30 @@ form#search textarea {
   width: 175px;
 }
 
-form#search input.searching,
-form#search textarea.searching {
-  border-color: #2E88C4;
-}
-
 form#search input:not([type=submit]):focus,
 form#search textarea:focus {
   background: #DEECFF;
   font-style: normal;
 }
+
+form#search input.valid {
+  background: url(valid.png) no-repeat scroll right center #EEFFCC;
+  border-color: #57AE35;
+}
+
 form#search button {
   color: #ffffff;
   
-  background: #424242;
+  background: #595959;
 
   border: none;
-  -moz-border-radius: 20px;
-  -webkit-border-radius: 20px;
-  -khtml-border-radius: 20px;
-  border-radius: 20px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -khtml-border-radius: 10px;
+  border-radius: 10px;
 
   font-size: 16px;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
   
   margin: 0;
   display: block;
@@ -105,36 +104,78 @@ form#search button {
   text-shadow: 0 1px 1px #000000;
   text-transform: uppercase;
 }
-form#search input.ok {
-  background: #EEFFCC;
-}
-
 form#search button:hover {
-  background: #868686;
+  background: #828282;
   cursor: pointer;
 }
-
-.content ul.connections li {
-  position: relative;
-  display: block;  
-  margin-bottom:5px;
-  padding: 15px;
-/*  height: 18px;*/
-
-  color: #FFFFFF;
-  
-  border: 1px solid #272727;
-  border-radius: 10px;
-  -moz-border-radius: 10px;
-  -webkit-border-radius: 10px;
-  -khtml-border-radius: 10px;
-  
-  background: #595959;
-  background:-webkit-gradient(linear, left top, left bottom, from(#595959), to(#363636));
-  background:-moz-linear-gradient(top, #595959, #363636);
-  background:-o-linear-gradient(top, #595959, #363636);
-  background:linear-gradient(top, #595959, #363636);
-    
-  -webkit-box-shadow: 0 3px 6px rgba(0,0,0,.25);
-  -moz-box-shadow: 0 3px 6px rgba(0,0,0,.25);
+ul {
+  list-style:none;
 }
+
+div.result {
+  width:100%;
+}
+
+
+
+/*
+try checkbox / radiobox
+
+#id_arrival_0 {
+font-family: ‘DroidSans-Bold’;
+text-transform:uppercase;
+padding: 0px 8px 0px 12px;
+-moz-border-radius-topleft: 0.5em;
+-moz-border-radius-bottomleft: 0.5em;
+-webkit-border-top-left-radius: 0.5em;
+-webkit-border-bottom-left-radius: 0.5em;
+border-top: 4px solid #aaa;
+border-left: 4px solid #ccc;
+border-right: 4px solid #ccc;
+border-bottom: 4px solid #ccc;
+-moz-border-top-colors:#aaa #bbb #ccc #ddd;
+-moz-border-left-colors:#aaa #bbb #ccc #ddd;
+-moz-border-bottom-colors:#aaa #bbb #ccc #ddd;
+-moz-border-right-colors:#aaa #bbb #ccc #ddd;
+background-color: #ddd;
+display: inline;
+}
+
+#id_arrival_1 {
+font-family: ‘DroidSans-Bold’;
+text-transform:uppercase;
+color:#414141;
+padding: 0px 12px 0px 8px;
+-moz-border-radius-topright: 0.5em;
+-moz-border-radius-bottomright: 0.5em;
+-webkit-border-top-right-radius: 0.5em;
+-webkit-border-bottom-right-radius: 0.5em;
+border-top: 4px solid #ccc;
+border-left: 4px solid #ccc;
+border-right: 4px solid #ccc;
+border-bottom: 4px solid #aaa;
+-moz-border-top-colors:#aaa #fff #fff #fff;
+-moz-border-right-colors:#aaa #dedede #efefef #fafafa;
+-moz-border-left-colors:#aaa #dedede #efefef #fafafa;
+-moz-border-bottom-colors:#aaa #dedede #efefef #fafafa;
+background-color: #fff;
+display: inline;
+}
+
+input[type=checkbox] {
+  -webkit-appearance: none;
+  -webkit-background-clip: padding-box;
+  -webkit-perspective: 200;
+  background-color: black;
+  border-bottom: 1px solid transparent;
+  border-bottom-left-radius: 6px 6px;
+  border-bottom-right-radius: 6px 6px;
+  border: 0px;
+  border-top-left-radius: 6px 6px;
+  border-top-right-radius: 6px 6px;
+  height: 40px;
+  position: relative;
+  width: 120px;
+}  
+
+*/

@@ -7,9 +7,10 @@ class Searchform(forms.Form):
     station_from = forms.CharField(max_length=50,required=True)
     station_to = forms.CharField(max_length=50,required=True)
     #station_via = forms.CharField(max_length=50,required=False)
-    date = forms.DateField(required=True, initial=datetime.datetime.now().strftime('%m.%d.%y'))
+    date = forms.DateField(required=True, initial=datetime.datetime.now().strftime('%d.%m.%y'))
     time = forms.TimeField(required=True, initial=datetime.datetime.now().strftime('%H:%M'))
-        
+    #arrival = forms.TypedChoiceField(choices=((False,'Dep'),(True,'Arr'),), widget=forms.RadioSelect)
+    #arrival2 = forms.BooleanField()
     
 class Station(models.Model):
     station_id = models.IntegerField()
