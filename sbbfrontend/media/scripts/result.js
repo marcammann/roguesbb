@@ -1,14 +1,14 @@
 $(document).ready(
   function(){
-    $('.toggle_container').hide();
+    $('.result_container').hide();
 
     $('h3.result').click(function(){
-      $(this).next('.toggle_container').slideToggle('fast');
+      $(this).next('.result_container').slideToggle('fast');
       $(this).toggleClass('active');
       return false;
     });
     
-    $('.toggle_container .block a.showall').click(function(){
+    $('.result_container .block a.showall').click(function(){
       $(this).toggleClass('active');
       
       if ($(this).hasClass('active')) {

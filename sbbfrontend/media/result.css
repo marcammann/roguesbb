@@ -45,13 +45,13 @@ h3.result a {
   padding-left: 30px;
 }
 
-.toggle_container {
+.result_container {
   margin: 10px;
   padding-bottom: 20px;
   overflow: hidden;
   clear: both;
 }
-.toggle_container .block {
+.result_container .block {
   padding: 20px;
   border: 1px solid #D6D6D6;
   background: #F0F0F0;
@@ -111,11 +111,11 @@ table.stops tbody.showall tr.showmore {
   display:none;
 }
 table.stops tbody tr.showmore td {
-  padding: 0px 15px;
+  padding: 2px 15px;
   font-size:0.9em;
 }
 table.stops tbody tr.showmore td a,
-.toggle_container .block a.showall {
+.result_container .block a.showall {
   color: #000000;
   background-color: #CCCCCC;
   
@@ -127,12 +127,12 @@ table.stops tbody tr.showmore td a,
   
   cursor: pointer;
   
-  padding: 2px 10px;
+  padding: 0px 10px;
   text-decoration: none;
 }
 
-.toggle_container .block a.showall {
+.result_container .block a.showall {
   float: right;
   padding: 3px 10px;
-  margin: 5px;
+  margin: 5px 0px;
 }
