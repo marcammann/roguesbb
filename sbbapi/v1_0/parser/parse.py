@@ -30,10 +30,19 @@ def platformtime_from_node(node):
 	""" Parses time and platform, returns empty string for platform if
 	it's not set """
 	
-	sbbtime = node.find(".//Time").text.strip()
-	platform = node.find(".//Platform/Text").text
-	if platform:
-		platform = platform.strip()
+	if node is None:
+		return None
+	
+	sbbtime = node.find(".//Time")
+	platform = node.find(".//Platform")
+		
+	if sbbtime is not None:
+		sbbtime = sbbtime.text.strip()
+	else:
+		sbbtime = '00d00:00:00'
+	
+	if platform is not None and platform.text is not None:
+		platform = platform.text.strip()
 	else:
 		platform = ''
 		
@@ -98,8 +107,11 @@ def segments_from_node(node):
 	
 	segment_data = []
 	for s in segments:
-		name = node.find('./JourneyAttributeList/JourneyAttribute[@from="{from_index}"]/Attribute[@type="NAME"]/AttributeVariant[@type="NORMAL"]/Text'.format(from_index=s[0])).text.strip()
-		category = node.find('./JourneyAttributeList/JourneyAttribute[@from="{from_index}"]/Attribute[@type="CATEGORY"]/AttributeVariant[@type="NORMAL"]/Text'.format(from_index=s[0])).text.strip() 
+		try:
+			name = node.find('./JourneyAttributeList/JourneyAttribute[@from="{from_index}"]/Attribute[@type="NAME"]/AttributeVariant[@type="NORMAL"]/Text'.format(from_index=s[0])).text.strip()
+			category = node.find('./JourneyAttributeList/JourneyAttribute[@from="{from_index}"]/Attribute[@type="CATEGORY"]/AttributeVariant[@type="NORMAL"]/Text'.format(from_index=s[0])).text.strip() 
+		except ValueError:
+			print 'Name / Category not found'
 		
 		item = {
 			'vehicle': {
@@ -119,16 +131,22 @@ def connection_from_node(node, extensive):
 	If extensive is true, then intermediate stops are included, if not,
 	then only the from/to values are returned and some overview data. """
 	
-	date = date_from_sbbdate(node.find(".//Overview/Date").text).strftime('%Y-%m-%d')
+	try:
+		date = date_from_sbbdate(node.find(".//Overview/Date").text).strftime('%Y-%m-%d')
+	except AttributeError:
+		print 'Date not found'
 	
-	print repr(node.find(".//Overview/Departure/BasicStop"))
+	#print repr(node.find(".//Overview/Departure/BasicStop"))
 	
 	departure_info = stop_from_node(node.find(".//Overview/Departure/BasicStop"))
 	arrival_info = stop_from_node(node.find(".//Overview/Arrival/BasicStop"))
 	
-	duration = time_from_sbbtime(node.find(".//Overview/Duration/Time").text).strftime('%H:%M:%S')
-	transfers = node.find(".//Overview/Transfers").text
-	
+	try:
+		duration = time_from_sbbtime(node.find(".//Overview/Duration/Time").text).strftime('%H:%M:%S')
+		transfers = node.find(".//Overview/Transfers").text
+	except AttributeError:
+		print 'Duration / Transfers not found'
+		
 	product_nodes = node.findall(".//Overview/Products/Product")
 	products = [p.get('cat').strip() for p in product_nodes]
 	
@@ -207,7 +225,10 @@ class SchedulesParser(object):
 		
 		
 	def request_id(self):
-		request_id = self.root.find(".//ConResCtxt").text
+		try:
+			request_id = self.root.find(".//ConResCtxt").text
+		except AttributeError:
+			print 'Request ID not found'
 		
 		return request_id
 		

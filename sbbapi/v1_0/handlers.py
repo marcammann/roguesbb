@@ -41,15 +41,15 @@ class ApiHandler(BaseHandler):
 			if hasattr(method, 'request_methods') and 'GET' not in method.request_methods:
 				raise Exception('Invalid Request Method, use %s' % repr(method.request_methods) ) 
 			
-			try:
-				retval = method(request=request)
+			#try:
+			retval = method(request=request)
 				
-				return retval
+			return retval
 			#except (PaginationError, TagNotFoundError, EventNotFoundError):
 			#	return rc.NOT_FOUND
-			except Exception,e :
+			#except Exception,e :
 				#print repr(e)
-				raise e
+			#	raise e
 		else:
 			return rc.NOT_FOUND
 		

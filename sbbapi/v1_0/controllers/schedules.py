@@ -61,8 +61,10 @@ class SchedulesController(BaseController):
 		
 		print request_content
 		
+		headers = {'User-Agent':'SBBMobile/4.2 CFNetwork/485.13.9 Darwin/11.0.0', 'Accept':'application/xml', 'Content-Type':'application/xml'}
+		
 		h = Http()
-		resp, content = h.request(self.entry_url, "POST", request_content)
+		resp, content = h.request(self.entry_url, "POST", request_content, headers=headers)
 		if resp['status'] != '200':
 			raise SBBRequestError(resp)
 		
