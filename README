@@ -1,1 +1,29 @@
-THIS IS A FRIGGIN AWESOME PROJECT!
+# Purpose
+An SBB Interface, both API and Frontend, based on the inofficial SBB api
+
+# Requirements
+* A recent version of Python, including `pip` and `virtualenv`
+* hg (Mercurial)
+
+# Installation
+
+```
+virtualenv sbb
+cd sbb
+source bin/activate
+
+git clone git@github.com:marcammann/roguesbb.git
+
+cd roguesbb
+pip install -r requirements.txt
+
+python setup.py develop
+
+# Start the API Server
+python sbbapi/manage.py runserver 0.0.0.0:8000    
+
+# License 
+GPL2
+
+# Disclaimer
+"THIS IS A FRIGGIN AWESOME PROJECT!"
