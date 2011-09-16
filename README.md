@@ -21,8 +21,9 @@ python setup.py develop
 ```
 
 # Start the API Server
-
+```
 python sbbapi/manage.py runserver 0.0.0.0:8000    
+```
 
 # API Usage Examples
 * http://localhost:8000/sbb/1.0/stations.getFromString?station_query=ber
