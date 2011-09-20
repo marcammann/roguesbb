@@ -1,0 +1,13 @@
+iPhone App Proxy:
+
+This works on a mac:
+- Download Charles. http://www.charlesproxy.com/
+- Setup HTTP Proxy in Charles. (Not SOCKS)
+- On your iPhone, go to the WiFi settings, set the Proxy.
+- Check this: http://www.charlesproxy.com/documentation/faqs/ssl-connections-from-within-iphone-applications/
+	-> Download the certificates.
+- Now open some random website from within Safari. Make sure Charles is
+	is logging this traffic. If it's not, check your proxy settings.
+- Open the SBB Application, do some requests. If not request to sbb.ch
+	shows up: Try the "Reload" button in the connection list. Or the
+	"Next" button.

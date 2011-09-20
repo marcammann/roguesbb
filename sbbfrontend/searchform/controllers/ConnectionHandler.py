@@ -2,7 +2,7 @@
 import httplib2
 
 DEFAULT_TIMEOUT=10 #seconds
-HOST='http://core01-eu.partiql.net:8002/sbb/1.0/'
+HOST='http://91.192.100.62:8001/sbb/1.0/'
 
 class ConnectionHandler:
     def __init__(self, ssl=False, cache=None, timeout=DEFAULT_TIMEOUT, proxy_info=None):
