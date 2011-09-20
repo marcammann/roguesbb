@@ -18,9 +18,21 @@ cd roguesbb
 pip install -r requirements.txt
 
 python setup.py develop
+```
 
 # Start the API Server
+```
 python sbbapi/manage.py runserver 0.0.0.0:8000    
+```
+
+# API Usage Examples
+* http://localhost:8000/sbb/1.0/stations.getFromString?station_query=ber
+* http://localhost:8000/sbb/1.0/stations.getFromString?station_query=zuri
+* http://localhost:8000/sbb/1.0/schedules.query?arrival_id=008503000&departure_id=008503016
+* http://localhost:8000/sbb/1.0/schedules.query?arrival_id=008503000&departure_id=008503016&extensive=1
+
+Check `README.API` for more information.
+
 
 # License 
 GPL2
